@@ -48,11 +48,20 @@
   gap: 2rem;
 }
 
-.best-matches h2,
 .all-jobs h2 {
   font-size: 1.375rem;
   margin-bottom: 1rem;
   color: #1f2937;
+}
+
+.error-message {
+  padding: 1rem;
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: #991b1b;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 .jobs-grid {

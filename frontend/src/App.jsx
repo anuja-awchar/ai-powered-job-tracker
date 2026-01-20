@@ -38,6 +38,8 @@ function App() {
   };
 
   const handleApply = (job) => {
+    // Store pending job in session storage for popup on return
+    sessionStorage.setItem('pendingJob', JSON.stringify(job));
     setPendingJob(job);
     setShowApplyPopup(true);
   };
@@ -50,13 +52,35 @@ function App() {
           pendingJob.id,
           'applied'
         );
+        // Clear from session
+        sessionStorage.removeItem('pendingJob');
       } catch (error) {
         console.error('Error recording application:', error);
       }
+    } else {
+      // Clear from session if user says no
+      sessionStorage.removeItem('pendingJob');
     }
     setShowApplyPopup(false);
     setPendingJob(null);
   };
+
+  // Check for pending application on app load (smart popup detection)
+  useEffect(() => {
+    if (currentPage === 'feed' && user && !showApplyPopup) {
+      const pendingJobStr = sessionStorage.getItem('pendingJob');
+      if (pendingJobStr) {
+        try {
+          const job = JSON.parse(pendingJobStr);
+          setPendingJob(job);
+          setShowApplyPopup(true);
+        } catch (error) {
+          console.error('Error parsing pending job:', error);
+          sessionStorage.removeItem('pendingJob');
+        }
+      }
+    }
+  }, [currentPage, user, showApplyPopup]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

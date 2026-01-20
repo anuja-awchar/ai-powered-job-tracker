@@ -10,6 +10,16 @@
   color: #1f2937;
 }
 
+.error-message {
+  padding: 1rem;
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: #991b1b;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
 .status-filters {
   display: flex;
   flex-wrap: wrap;

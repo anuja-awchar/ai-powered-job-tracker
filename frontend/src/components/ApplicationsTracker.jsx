@@ -7,6 +7,7 @@ export default function ApplicationsTracker({ userId }) {
   const [applications, setApplications] = useState([]);
   const [filterStatus, setFilterStatus] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     loadApplications();
@@ -14,11 +15,13 @@ export default function ApplicationsTracker({ userId }) {
 
   const loadApplications = async () => {
     setLoading(true);
+    setError('');
     try {
       const response = await applicationsAPI.getApplications(userId, filterStatus || null);
       setApplications(response.data.applications || []);
-    } catch (error) {
-      console.error('Error loading applications:', error);
+    } catch (err) {
+      console.error('Error loading applications:', err);
+      setError('Failed to load applications');
     } finally {
       setLoading(false);
     }
@@ -30,6 +33,7 @@ export default function ApplicationsTracker({ userId }) {
       loadApplications();
     } catch (error) {
       console.error('Error updating status:', error);
+      setError('Failed to update application status');
     }
   };
 
@@ -79,6 +83,8 @@ export default function ApplicationsTracker({ userId }) {
           Rejected
         </button>
       </div>
+
+      {error && <div className="error-message">{error}</div>}
 
       {loading ? (
         <p className="loading">Loading applications...</p>

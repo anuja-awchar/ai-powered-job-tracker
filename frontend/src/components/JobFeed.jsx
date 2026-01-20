@@ -7,6 +7,7 @@ import '../styles/jobFeed.css';
 export default function JobFeed({ userId, onApply }) {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     title: '',
     jobType: '',
@@ -22,12 +23,14 @@ export default function JobFeed({ userId, onApply }) {
 
   const loadJobs = async () => {
     setLoading(true);
+    setError('');
     try {
       const response = await jobsAPI.getFeed(userId, filters);
       setJobs(response.data.allJobs || []);
       setBestMatches(response.data.bestMatches || []);
-    } catch (error) {
-      console.error('Error loading jobs:', error);
+    } catch (err) {
+      console.error('Error loading jobs:', err);
+      setError('Failed to load jobs. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -77,7 +80,7 @@ export default function JobFeed({ userId, onApply }) {
           />
           <select name="matchScoreFilter" value={filters.matchScoreFilter} onChange={handleFilterChange}>
             <option value="">All Match Scores</option>
-            <option value="high">High (>70%)</option>
+            <option value="high">High (&gt;70%)</option>
             <option value="medium">Medium (40-70%)</option>
           </select>
           <button type="submit">Search</button>
@@ -98,6 +101,7 @@ export default function JobFeed({ userId, onApply }) {
 
         <div className="all-jobs">
           <h2>All Jobs ({jobs.length})</h2>
+          {error && <div className="error-message">{error}</div>}
           {loading ? (
             <p className="loading">Loading jobs...</p>
           ) : jobs.length === 0 ? (
