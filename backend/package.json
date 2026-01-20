@@ -1,0 +1,30 @@
+{
+  "name": "ai-job-tracker-backend",
+  "version": "1.0.0",
+  "description": "AI-powered job tracker backend with Fastify",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["job-tracker", "fastify", "ai"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^4.25.0",
+    "@fastify/cors": "^8.5.0",
+    "@fastify/jwt": "^7.8.1",
+    "dotenv": "^16.3.1",
+    "openai": "^4.24.0",
+    "axios": "^1.6.5",
+    "redis": "^4.6.12",
+    "pdfparse": "^1.1.1",
+    "bcryptjs": "^2.4.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

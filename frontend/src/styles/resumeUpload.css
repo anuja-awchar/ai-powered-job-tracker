@@ -1,0 +1,72 @@
+.resume-upload-container {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.resume-upload-container h2 {
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.upload-area {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.upload-area input {
+  display: none;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f9fafb;
+}
+
+.upload-label:hover {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.upload-label p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.resume-upload-container .error {
+  display: block;
+  padding: 0.75rem;
+  background-color: #fee2e2;
+  border-radius: 0.5rem;
+  border-left: 4px solid #dc2626;
+}
+
+.resume-upload-container .success {
+  display: block;
+  padding: 0.75rem;
+  background-color: #dcfce7;
+  border-radius: 0.5rem;
+  border-left: 4px solid #10b981;
+}
+
+@media (max-width: 640px) {
+  .resume-upload-container {
+    padding: 1rem;
+  }
+
+  .upload-label {
+    padding: 1.5rem;
+  }
+}
