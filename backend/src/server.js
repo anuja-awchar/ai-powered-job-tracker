@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = Fastify({
-  logger: true,
+  logger: false, // Disable Fastify logger in development
 });
 
 // Register CORS
@@ -24,8 +24,11 @@ app.register(cors, {
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
 });
 
-// Initialize Redis
-await initializeRedis();
+// Initialize Redis (with graceful fallback for development)
+// Run in background to not block server startup
+initializeRedis().catch((error) => {
+  console.warn('⚠️ Redis initialization failed, app will use in-memory cache');
+});
 
 // Register routes
 app.register(authRoutes, { prefix: '/api/auth' });
@@ -45,7 +48,7 @@ const start = async () => {
     await app.listen({ port, host: '0.0.0.0' });
     console.log(`🚀 Server running at http://localhost:${port}`);
   } catch (err) {
-    app.log.error(err);
+    console.error('Server start error:', err);
     process.exit(1);
   }
 };

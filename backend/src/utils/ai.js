@@ -1,9 +1,11 @@
 import OpenAI from 'openai';
 import { getRedisClient } from './redis.js';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.startsWith('sk-')
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null;
 
 export const calculateJobMatchScore = async (jobData, resumeText) => {
   const cacheKey = `match:${jobData.id}:${Buffer.from(resumeText).toString('base64').substring(0, 20)}`;
@@ -13,6 +15,20 @@ export const calculateJobMatchScore = async (jobData, resumeText) => {
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
+  }
+
+  // If OpenAI not available, return mock score for development
+  if (!openai) {
+    const mockScore = Math.floor(Math.random() * 40) + 50; // 50-90 range
+    const mockResult = {
+      score: mockScore,
+      keyMatches: ['Development Mode', 'Mock scoring', 'Real API needed for production'],
+      missingSkills: [],
+      explanation: 'Mock score - add valid OPENAI_API_KEY to .env.local for real scoring',
+    };
+    // Cache for 1 hour
+    await redis.setEx(cacheKey, 3600, JSON.stringify(mockResult));
+    return mockResult;
   }
 
   const prompt = `
@@ -90,6 +106,11 @@ Provide a helpful, concise response (2-3 sentences max). If referring to specifi
 `;
 
   try {
+    // If OpenAI not available, return mock response for development
+    if (!openai) {
+      return `Thanks for your question! In development mode with mock responses. Add a valid OPENAI_API_KEY to .env.local for real AI responses. Your question: "${userMessage.substring(0, 50)}..."`;
+    }
+
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
       messages: [
