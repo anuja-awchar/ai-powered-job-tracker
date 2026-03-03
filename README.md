@@ -316,51 +316,6 @@ Database Replicas
 | No background jobs | Synchronous processing | Bull queue for async tasks |
 | Basic auth | Low security | OAuth 2.0, 2FA, JWT refresh |
 
-### Would Build Next (With More Time)
-1. **Real Job API Integration**
-   - Adzuna API for US/UK/Canada jobs
-   - JSearch on RapidAPI for more sources
-   - Scheduled job refresh every 6 hours
-
-2. **Advanced Matching**
-   - ML model fine-tuned on successful matches
-   - Skill similarity matching
-   - Company culture assessment
-
-3. **Enhanced Analytics**
-   - Application success rate tracking
-   - Optimal posting time analysis
-   - Salary range predictions
-
-4. **Persistent Database**
-   - MongoDB for flexible schema
-   - User analytics
-   - Historical data
-
-5. **Mobile App**
-   - React Native for iOS/Android
-   - Push notifications for matches
-   - Offline resume access
-
-6. **Social Features**
-   - Job sharing with peers
-   - Interview prep resources
-   - Networking recommendations
-
-## 📋 Deployment Checklist
-
-- [x] Clean code with proper structure
-- [x] Environment variables in .env.example
-- [x] No API keys committed
-- [x] Architecture diagram in README
-- [x] Setup instructions complete
-- [x] All core features implemented
-- [x] AI matching functional
-- [x] Smart popup flow working
-- [x] Responsive design
-- [ ] Live deployment URL
-- [ ] GitHub repository
-
 ## 📝 License
 
 MIT
@@ -370,6 +325,4 @@ MIT
 Built as a demonstration of AI-powered job tracking.
 
 ---
-
-**Live Demo**: [Coming Soon]
 **GitHub**: https://github.com/anuja-awchar/ai-powered-job-tracker
